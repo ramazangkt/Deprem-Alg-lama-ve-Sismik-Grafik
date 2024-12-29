@@ -54,7 +54,7 @@ MPU6050 sensörü, I2C protokolü üzerinden Arduino ile haberleşir:
   - Gerçek zamanlı grafik gösterimi
   - Port seçimi ve bağlantı kontrolü
   - Görsel deprem uyarı sistemi
-  - Veri kaydetme ve analiz
+  
 
 ## 🛠 Kurulum
 
