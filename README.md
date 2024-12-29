@@ -1,70 +1,101 @@
-# Deprem Algılama ve Sismik Grafik Uygulaması
+# 🌍 Deprem Algılama ve Sismik Grafik Uygulaması
 
-Bu proje, MPU6050 sensörü kullanan bir Arduino tabanlı deprem algılama ve gerçek zamanlı görselleştirme sistemidir.
 
-## Özellikler
+## 📑 İçindekiler
+- [Proje Hakkında](#-proje-hakkında)
+- [Donanım Bağlantıları](#-donanım-bağlantıları)
+- [I2C Haberleşme](#-i2c-haberleşme)
+- [Yazılım Bileşenleri](#-yazılım-bileşenleri)
+- [Kurulum](#-kurulum)
+- [VSPE Yapılandırması](#-vspe-yapılandırması)
+- [Kalibrasyon](#-kalibrasyon)
+- [Kullanım](#-kullanım)
 
-- MPU6050 jiroskop kullanarak gerçek zamanlı sismik aktivite algılama
-- Java tabanlı grafiksel kullanıcı arayüzü
-- Gerçek zamanlı veri görselleştirme
-- Hareket algılama ve uyarı sistemi
-- Seri port üzerinden Arduino-Java haberleşmesi
+## 🎯 Proje Hakkında
+Bu proje, MPU6050 sensörü kullanan bir Arduino tabanlı sismik aktivite algılama ve gerçek zamanlı görselleştirme sistemidir. Sistem, sismik hareketleri algılayarak Java tabanlı bir kullanıcı arayüzünde görselleştirir.
 
-## Gereksinimler
+## 🔌 Donanım Bağlantıları
 
-### Donanım
-- Arduino (Uno, Nano, vb.)
-- MPU6050 Sensör
-- LED (Pin 11)
-- Buzzer (Pin 10)
-- Bağlantı kabloları
+### MPU6050 - Arduino Bağlantısı
+VCC -> 3.3V
+GND -> GND
+SCL -> (SCL)
+SDA -> (SDA)
 
-### Yazılım
-- Arduino IDE
-- Java JDK 8 veya üstü
-- Virtual Serial COM Port Emulator VSPE
+### Diğer Bileşenler
+LED -> Pin 11
+Buzzer -> Pin 10
 
-### Kütüphaneler
-- jSerialComm-2.10.4.jar
-- jfreechart-1.5.4.jar
-- MPU6050 Arduino Kütüphanesi
+## 🔄 I2C Haberleşme
+MPU6050 sensörü, I2C protokolü üzerinden Arduino ile haberleşir:
+- I2C Adresi: 0x68 (varsayılan)
+- I2C Hızı: 400kHz (Yüksek Hız Modu)
+- Wire kütüphanesi kullanılarak haberleşme sağlanır
 
-## Kurulum
+## 💻 Yazılım Bileşenleri
 
-1. Arduino Kurulumu
-   - MPU6050 kütüphanesini Arduino IDE'ye ekleyin
-   - `arduino/arduino_deprem/arduino_deprem.ino` dosyasını Arduino'ya yükleyin
+### Arduino Yazılımı
+- **Özellikler:**
+  - Gelişmiş kalibrasyon sistemi
+  - Hareketli ortalama filtresi (32 örnek)
+  - Gürültü filtreleme (±10 threshold)
+  - LED ve Buzzer ile uyarı sistemi
+  - 115200 baud rate seri haberleşme
+  - Veri formatı: `GyroX,GyroY,GyroZ,LED_DURUMU`
 
-2. Java Uygulaması
-   - Gerekli JAR dosyalarını projeye ekleyin
-   - Java kodunu derleyin ve çalıştırın
+### Java Uygulaması
+- **Bileşenler:**
+  - DepremIzlemeUygulamasi.java (Ana sınıf)
+  - DepremGUI.java (Kullanıcı arayüzü)
+  - GrafikPaneli.java (JFreeChart grafiği)
+  - SeriPortYoneticisi.java (Port iletişimi)
 
-## Kullanım
+- **Özellikler:**
+  - Gerçek zamanlı grafik gösterimi
+  - Port seçimi ve bağlantı kontrolü
+  - Görsel deprem uyarı sistemi
+  - Veri kaydetme ve analiz
 
-1. Arduino'yu USB port üzerinden bilgisayara bağlayın
-2. Java uygulamasını başlatın
-3. Doğru COM portunu seçin ve "Bağlan" butonuna tıklayın
-4. Gerçek zamanlı sismik verileri grafikte görüntüleyin
+## 🛠 Kurulum
 
-## Proje Yapısı
+### Arduino Kurulumu
+1. Arduino IDE'yi yükleyin
+2. MPU6050 kütüphanesini ekleyin
+3. Wire kütüphanesini ekleyin (genelde dahilidir)
+4. Kodu Arduino'ya yükleyin
 
-- `arduino/`: Arduino kaynak kodları
-- `java/`: Java uygulama kodları
-- `lib/`: Gerekli JAR dosyaları
-- `docs/`: Dokümantasyon ve görseller
+### Java Kurulumu
+1. JDK 11 veya üstünü yükleyin
+2. Gerekli JAR dosyalarını ekleyin:
+   - jSerialComm-2.10.4.jar
+   - jfreechart-1.5.4.jar
 
-## Katkıda Bulunma
+## 🔗 VSPE Yapılandırması
+Virtual Serial Port Emulator (VSPE) kullanarak sanal seri port oluşturma:
 
-1. Bu repository'yi fork edin
-2. Feature branch oluşturun (`git checkout -b feature/yeniOzellik`)
-3. Değişikliklerinizi commit edin (`git commit -am 'Yeni özellik eklendi'`)
-4. Branch'inizi push edin (`git push origin feature/yeniOzellik`)
-5. Pull Request oluşturun
+1. VSPE'yi başlatın
+2. "Pair" seçeneğini seçin
+3. İlk port: Arduino'nun bağlı olduğu COM port
+4. İkinci port: Java uygulamasının kullanacağı sanal COM port
+5. "Create" ile bağlantıyı oluşturun
 
-## Lisans
+## 📊 Kalibrasyon
+Arduino kodu içinde otomatik kalibrasyon sistemi bulunmaktadır:
+- 3 iterasyon x 2000 örnek
+- Her iterasyon arası 2ms bekleme
+- Offset değerleri hesaplanır ve uygulanır
+- Kalibrasyon doğruluk kontrolü yapılır
 
-MIT License
+## 🚀 Kullanım
+1. Arduino'yu USB ile bilgisayara bağlayın
+2. VSPE'de port eşleştirmesini yapın
+3. Java uygulamasını başlatın
+4. Port seçimi yapın ve "Bağlan" butonuna tıklayın
+5. Gerçek zamanlı sismik verileri izleyin
 
-## Yazar
+## 📝 Önemli Notlar
+- MPU6050 sensörünü sabit ve düz bir yüzeye monte edin
+- Kalibrasyon sırasında sensörü hareket ettirmeyin
+- VSPE bağlantısını kontrol edin
+- Java uygulamasında doğru portu seçtiğinizden emin olun
 
-[Ramazan Göktürk](https://github.com/ramazangkt)
