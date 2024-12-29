@@ -67,8 +67,8 @@ MPU6050 sensörü, I2C protokolü üzerinden Arduino ile haberleşir:
 ### Java Kurulumu
 1. JDK 11 veya üstünü yükleyin
 2. Gerekli JAR dosyalarını ekleyin:
-   - jSerialComm-2.10.4.jar
-   - jfreechart-1.5.4.jar
+   - jSerialComm-2.11.0.jar
+   - jfreechart-1.0.19.jar
 
 ## 🔗 VSPE Yapılandırması
 Virtual Serial Port Emulator (VSPE) kullanarak sanal seri port oluşturma:
