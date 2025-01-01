@@ -7,7 +7,6 @@ import java.util.concurrent.*;
 public class SeriPortYoneticisi {
     // Sabit değerler
     private static final int VERI_OKUMA_GECIKMESI = 50;  // Veri okuma aralığı (ms)
-    private static final int DEPREM_ESIK_DEGERI = 3000;  // Deprem algılama eşiği
 
     private final DepremGUI gui;                    // GUI referansı
     private SerialPort aktifPort;                   // Aktif seri port
