@@ -23,8 +23,8 @@ SCL -> (SCL)
 SDA -> (SDA)   
 
 ### Diğer Bileşenler
-LED -> Pin 11
-Buzzer -> Pin 10
+LED -> Pin 11   
+Buzzer -> Pin 10    
 
 ## 🔄 I2C Haberleşme
 MPU6050 sensörü, I2C protokolü üzerinden Arduino ile haberleşir:
