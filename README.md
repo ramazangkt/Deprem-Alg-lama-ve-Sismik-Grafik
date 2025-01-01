@@ -17,10 +17,10 @@ Bu proje, MPU6050 sensörü kullanan bir Arduino tabanlı sismik aktivite algıl
 ## 🔌 Donanım Bağlantıları
 
 ### MPU6050 - Arduino Bağlantısı
-VCC -> 3.3V
-GND -> GND
-SCL -> (SCL)
-SDA -> (SDA)
+VCC -> 3.3V   
+GND -> GND   
+SCL -> (SCL)   
+SDA -> (SDA)   
 
 ### Diğer Bileşenler
 LED -> Pin 11
